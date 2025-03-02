@@ -18,5 +18,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
+    <PackageVersion Include="SensitiveString" Version="0.1.9" />
   </ItemGroup>
 </Project>

@@ -19,8 +19,12 @@ internal class SensitiveStringRuleAdapter<TRequest> : IRuleBuilderInitialCollect
         return new RuleBuilderOptionsAdapter<TRequest>(result);
     }
 
-    public IRuleBuilderOptions<TRequest, string> SetAsyncValidator(IAsyncPropertyValidator<TRequest, string> validator) =>
-        throw new NotImplementedException();
+    public IRuleBuilderOptions<TRequest, string> SetAsyncValidator(IAsyncPropertyValidator<TRequest, string> validator)
+    {
+        var validatorAdapter = new AsyncPropertyValidatorAdapter<TRequest>(validator);
+        var result = _originalRule.SetAsyncValidator(validatorAdapter);
+        return new RuleBuilderOptionsAdapter<TRequest>(result);
+    }
 
     public IRuleBuilderOptions<TRequest, string> SetValidator(IValidator<string> validator, params string[] ruleSets) =>
         throw new NotImplementedException();

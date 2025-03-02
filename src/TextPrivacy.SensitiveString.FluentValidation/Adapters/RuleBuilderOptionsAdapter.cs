@@ -31,12 +31,20 @@ internal class RuleBuilderOptionsAdapter<TRequest> : IRuleBuilderOptions<TReques
     }
 
     public IRuleBuilderOptions<TRequest, string> SetValidator<TValidator>(Func<TRequest, TValidator> validatorProvider, params string[] ruleSets)
-        where TValidator : IValidator<string> =>
-        throw new NotImplementedException();
+        where TValidator : IValidator<string>
+    {
+        var validatorAdapter = ValidatorAdapter.Convert(validatorProvider);
+        var result = _ruleBuilderOptions.SetValidator(validatorAdapter, ruleSets);
+        return new RuleBuilderOptionsAdapter<TRequest>(result);
+    }
 
     public IRuleBuilderOptions<TRequest, string> SetValidator<TValidator>(Func<TRequest, string, TValidator> validatorProvider, params string[] ruleSets)
-        where TValidator : IValidator<string> =>
-        throw new NotImplementedException();
+        where TValidator : IValidator<string>
+    {
+        var validatorAdapter = ValidatorAdapter.Convert(validatorProvider);
+        var result = _ruleBuilderOptions.SetValidator(validatorAdapter, ruleSets);
+        return new RuleBuilderOptionsAdapter<TRequest>(result);
+    }
 
     public IRuleBuilderOptions<TRequest, string> DependentRules(Action action) =>
         throw new NotImplementedException();

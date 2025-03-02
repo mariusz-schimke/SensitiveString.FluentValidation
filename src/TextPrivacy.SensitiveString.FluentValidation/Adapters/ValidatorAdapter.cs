@@ -19,4 +19,12 @@ internal class ValidatorAdapter(IValidator<string> validator) : IValidator<Sensi
 
     public async Task<ValidationResult> ValidateAsync(SensitiveString instance, CancellationToken cancellationToken) =>
         await validator.ValidateAsync(instance.Reveal(), cancellationToken);
+
+    public static Func<TRequest, IValidator<SensitiveString>> Convert<TRequest, TValidator>(Func<TRequest, TValidator> validatorProvider)
+        where TValidator : IValidator<string> =>
+        request => new ValidatorAdapter(validatorProvider(request));
+
+    public static Func<TRequest, SensitiveString, IValidator<SensitiveString>> Convert<TRequest, TValidator>(Func<TRequest, string, TValidator> validatorProvider)
+        where TValidator : IValidator<string> =>
+        (request, value) => new ValidatorAdapter(validatorProvider(request, value.Reveal()));
 }

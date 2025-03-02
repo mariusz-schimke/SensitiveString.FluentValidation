@@ -1,3 +1,5 @@
+using FluentValidation;
+using TextPrivacy.SensitiveString.FluentValidation.Examples.Validators;
 using TextPrivacy.SensitiveString.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ builder.Services.AddControllers().AddJsonOptions(
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUserRequestValidator>();
 
 var app = builder.Build();
 

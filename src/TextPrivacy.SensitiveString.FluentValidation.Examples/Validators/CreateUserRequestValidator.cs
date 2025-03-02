@@ -3,7 +3,7 @@ using TextPrivacy.SensitiveString.FluentValidation.Examples.Requests;
 
 namespace TextPrivacy.SensitiveString.FluentValidation.Examples.Validators;
 
-internal class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
+public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {
     public CreateUserRequestValidator()
     {

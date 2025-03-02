@@ -7,9 +7,10 @@ namespace TextPrivacy.SensitiveString.FluentValidation;
 public static class Validation
 {
     /// <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    public static IRuleBuilderInitial<TRequest, string?> RuleForSensitive<TRequest>(
+    public static IRuleBuilderInitial<TRequest, string> RuleForSensitive<TRequest, TProperty>(
         this AbstractValidator<TRequest> validator,
-        Expression<Func<TRequest, SensitiveString?>> expression)
+        Expression<Func<TRequest, TProperty>> expression)
+        where TProperty : SensitiveString?
     {
         // type cast the expression to string so x => x.SensitiveStringProperty becomes x => (string) x.SensitiveStringProperty
         var convertedExpression = Expression.Lambda<Func<TRequest, string>>(
@@ -21,9 +22,10 @@ public static class Validation
     }
 
     /// <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    public static IRuleBuilderInitialCollection<TRequest, string?> RuleForEachSensitive<TRequest>(
+    public static IRuleBuilderInitialCollection<TRequest, string> RuleForEachSensitive<TRequest, TProperty>(
         this AbstractValidator<TRequest> validator,
-        Expression<Func<TRequest, IEnumerable<SensitiveString?>?>> expression)
+        Expression<Func<TRequest, IEnumerable<TProperty>?>> expression)
+        where TProperty : SensitiveString?
     {
         // x.SensitiveStringCollectionProperty
         var collectionExpression = expression.Body;
@@ -42,7 +44,7 @@ public static class Validation
             itemTypeConversionLambda);
 
         // x => x.SensitiveStringCollectionProperty.Select(item => Convert(item, String))
-        var selectCallWithItemTypeConversionLambda = Expression.Lambda<Func<TRequest, IEnumerable<string?>?>>(
+        var selectCallWithItemTypeConversionLambda = Expression.Lambda<Func<TRequest, IEnumerable<string>?>>(
             selectCallWithItemTypeConversion,
             expression.Parameters);
 

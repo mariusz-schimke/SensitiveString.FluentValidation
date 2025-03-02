@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TextPrivacy.SensitiveString.FluentValidation.Examples.Requests;
 
 namespace TextPrivacy.SensitiveString.FluentValidation.Examples.Controllers;
 
@@ -7,7 +8,7 @@ namespace TextPrivacy.SensitiveString.FluentValidation.Examples.Controllers;
 public class UsersController : ControllerBase
 {
     [HttpPost]
-    public IActionResult CreateUser()
+    public IActionResult CreateUser([FromBody] CreateUserRequest req)
     {
         return Ok();
     }

@@ -1,6 +1,6 @@
 namespace TextPrivacy.SensitiveString.FluentValidation.Examples.Requests;
 
-internal class CreateUserRequest
+public class CreateUserRequest
 {
     public SensitiveString? FirstName { get; init; }
     public SensitiveString? LastName { get; init; }

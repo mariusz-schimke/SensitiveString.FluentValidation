@@ -1,6 +1,6 @@
-@HostAddress = http://localhost:5194
+@HostAddress = https://localhost:7082
 
-GET {{HostAddress}}/users/
+POST {{HostAddress}}/users/
 Accept: application/json
 Content-Type: application/json
 

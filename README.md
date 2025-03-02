@@ -18,6 +18,10 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
         this.RuleForSensitive(x => x.FirstName)
             .NotEmpty();
 
+      	// also valid (performs the same action as the call above)
+        RuleFor(x => (string?) x.FirstName)
+            .NotEmpty();
+
         this.RuleForSensitive(x => x.PrimaryEmail)
             .NotEmpty()
             .EmailAddress();
@@ -27,7 +31,7 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
             .EmailAddress();
 
 				this.RuleForEachSensitive(x => x.AddressLines)
-            .NotEmpty()
+            .NotEmpty();
     }
 }
 ```

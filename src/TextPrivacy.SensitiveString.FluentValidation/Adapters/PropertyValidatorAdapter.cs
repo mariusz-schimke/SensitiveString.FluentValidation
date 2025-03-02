@@ -10,15 +10,8 @@ internal abstract class PropertyValidatorAdapter(IPropertyValidator validator) :
     public string Name => validator.Name;
 }
 
-internal class PropertyValidatorAdapter<TRequest> : PropertyValidatorAdapter, IPropertyValidator<TRequest, SensitiveString>
+internal class PropertyValidatorAdapter<TRequest>(IPropertyValidator<TRequest, string> validator) : PropertyValidatorAdapter(validator),
+    IPropertyValidator<TRequest, SensitiveString>
 {
-    private readonly IPropertyValidator<TRequest, string> _validator;
-
-    public PropertyValidatorAdapter(IPropertyValidator<TRequest, string> validator)
-        : base(validator)
-    {
-        _validator = validator;
-    }
-
-    public bool IsValid(ValidationContext<TRequest> context, SensitiveString value) => _validator.IsValid(context, value.Reveal());
+    public bool IsValid(ValidationContext<TRequest> context, SensitiveString value) => validator.IsValid(context, value.Reveal());
 }

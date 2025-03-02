@@ -3,7 +3,8 @@ using FluentValidation.Validators;
 
 namespace TextPrivacy.SensitiveString.FluentValidation.Adapters;
 
-internal class RuleBuilderInitialAdapter<TRequest>(IRuleBuilderInitial<TRequest, SensitiveString> source) : IRuleBuilderInitial<TRequest, string>
+internal class RuleBuilderInitialAdapter<TRequest>(IRuleBuilderInitial<TRequest, SensitiveString> source)
+    : IRuleBuilderInitial<TRequest, string>
 {
     public IRuleBuilderOptions<TRequest, string> SetValidator(IPropertyValidator<TRequest, string> validator)
     {

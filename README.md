@@ -30,7 +30,7 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
             .NotEmpty()
             .EmailAddress();
 
-				this.RuleForEachSensitive(x => x.AddressLines)
+        this.RuleForEachSensitive(x => x.AddressLines)
             .NotEmpty();
     }
 }

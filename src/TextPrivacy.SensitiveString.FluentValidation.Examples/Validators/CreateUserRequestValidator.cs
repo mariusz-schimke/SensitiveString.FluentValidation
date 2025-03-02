@@ -7,19 +7,26 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {
     public CreateUserRequestValidator()
     {
-        // THIS THROWS AN EXCEPTION BECAUSE OF A TYPECAST TO AN INTERNAL TYPE WHICH I CAN'T IMPLEMENT IN ANY WAY
-        // SO THE APPROACH WITH THE ADAPTERS IS NOT POSSIBLE
-
         this.RuleForSensitive(x => x.FirstName)
             .NotEmpty()
-            .WithErrorCode("code1");
+            .WithErrorCode("empty_value");
 
         this.RuleForSensitive(x => x.LastName)
-            .NotEmpty();
+            .NotEmpty()
+            .WithErrorCode("empty_value");
+
+        this.RuleForEachSensitive(x => x.AddressLines)
+            .NotEmpty()
+            .WithErrorCode("empty_value");
+
+        this.RuleForSensitive(x => x.PrimaryEmail)
+            .NotEmpty()
+            .EmailAddress()
+            .WithErrorCode("invalid_email");
 
         this.RuleForEachSensitive(x => x.SecondaryEmails)
             .NotEmpty()
-            .NotEqual("doej@example.com")
-            .WithErrorCode("code1");
+            .EmailAddress()
+            .WithErrorCode("invalid_email");
     }
 }

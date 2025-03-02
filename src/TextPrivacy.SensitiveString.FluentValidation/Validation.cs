@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using FluentValidation;
-using TextPrivacy.SensitiveString.FluentValidation.Adapters;
+using FluentValidation.Internal;
 
 namespace TextPrivacy.SensitiveString.FluentValidation;
 
@@ -22,8 +22,13 @@ public static class Validation
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, SensitiveString?>> expression)
     {
-        var result = new RuleBuilderInitialAdapter<TRequest>(validator.RuleFor(expression));
-        return result;
+        // type cast the expression to string so x => x.SensitiveStringProperty becomes x => (string) x.SensitiveStringProperty
+        var convertedExpression = Expression.Lambda<Func<TRequest, string>>(
+            Expression.Convert(expression.Body, typeof(string)),
+            expression.Parameters
+        );
+
+        return validator.RuleFor(convertedExpression);
     }
 
     /// <summary>
@@ -42,7 +47,31 @@ public static class Validation
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, IEnumerable<SensitiveString?>?>> expression)
     {
-        var result = new RuleBuilderInitialCollectionAdapter<TRequest>(validator.RuleForEach(expression));
-        return result;
+        // x.SensitiveStringCollectionProperty
+        var collectionExpression = expression.Body;
+
+        // item => Convert(item, String)
+        var parameter = Expression.Parameter(typeof(SensitiveString), "item");
+        var itemTypeConversionExpression = Expression.Convert(parameter, typeof(string));
+        var itemTypeConversionLambda = Expression.Lambda<Func<SensitiveString, string>>(itemTypeConversionExpression, parameter);
+
+        // x.SensitiveStringCollectionProperty.Select(item => Convert(item, String))
+        var selectCallWithItemTypeConversion = Expression.Call(
+            typeof(Enumerable),
+            nameof(Enumerable.Select),
+            [typeof(SensitiveString), typeof(string)],
+            collectionExpression,
+            itemTypeConversionLambda);
+
+        // x => x.SensitiveStringCollectionProperty.Select(item => Convert(item, String))
+        var selectCallWithItemTypeConversionLambda = Expression.Lambda<Func<TRequest, IEnumerable<string?>?>>(
+            selectCallWithItemTypeConversion,
+            expression.Parameters);
+
+        return validator.RuleForEach(selectCallWithItemTypeConversionLambda)
+            .Configure(x =>
+            {
+                x.PropertyName = expression.GetMember().Name;
+            });
     }
 }

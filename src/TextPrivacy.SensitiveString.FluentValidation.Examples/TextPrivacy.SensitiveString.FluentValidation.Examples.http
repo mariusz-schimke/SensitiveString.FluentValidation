@@ -1,0 +1,6 @@
+@TextPrivacy.SensitiveString.FluentValidation.Examples_HostAddress = http://localhost:5194
+
+GET {{TextPrivacy.SensitiveString.FluentValidation.Examples_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

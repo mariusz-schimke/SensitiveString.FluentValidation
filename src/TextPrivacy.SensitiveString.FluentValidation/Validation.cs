@@ -4,7 +4,7 @@ using TextPrivacy.SensitiveString.FluentValidation.Adapters;
 
 namespace TextPrivacy.SensitiveString.FluentValidation;
 
-public static class FluentValidatorExtensions
+public static class Validation
 {
     /// <summary>
     ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
@@ -18,7 +18,7 @@ public static class FluentValidatorExtensions
     /// <typeparam name="TRequest">
     ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
     /// </typeparam>
-    public static IRuleBuilderInitial<TRequest, string?> RuleForSensitiveString<TRequest>(
+    public static IRuleBuilderInitial<TRequest, string?> RuleForSensitive<TRequest>(
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, SensitiveString?>> expression)
     {
@@ -38,7 +38,7 @@ public static class FluentValidatorExtensions
     /// <typeparam name="TRequest">
     ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
     /// </typeparam>
-    public static IRuleBuilderInitialCollection<TRequest, string?> RuleForEachSensitiveString<TRequest>(
+    public static IRuleBuilderInitialCollection<TRequest, string?> RuleForEachSensitive<TRequest>(
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, IEnumerable<SensitiveString?>?>> expression)
     {

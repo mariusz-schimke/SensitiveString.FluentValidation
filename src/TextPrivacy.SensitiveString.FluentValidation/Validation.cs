@@ -6,18 +6,7 @@ namespace TextPrivacy.SensitiveString.FluentValidation;
 
 public static class Validation
 {
-    /// <summary>
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </summary>
-    /// <param name="validator">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </param>
-    /// <param name="expression">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </param>
-    /// <typeparam name="TRequest">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </typeparam>
+    /// <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
     public static IRuleBuilderInitial<TRequest, string?> RuleForSensitive<TRequest>(
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, SensitiveString?>> expression)
@@ -31,18 +20,7 @@ public static class Validation
         return validator.RuleFor(convertedExpression);
     }
 
-    /// <summary>
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </summary>
-    /// <param name="validator">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </param>
-    /// <param name="expression">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </param>
-    /// <typeparam name="TRequest">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </typeparam>
+    /// <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
     public static IRuleBuilderInitialCollection<TRequest, string?> RuleForEachSensitive<TRequest>(
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, IEnumerable<SensitiveString?>?>> expression)

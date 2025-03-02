@@ -15,6 +15,10 @@ public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
             .NotEmpty()
             .WithErrorCode("empty_value");
 
+        this.RuleForEachSensitive(x => x.AddressLines)
+            .NotEmpty()
+            .WithErrorCode("empty_value");
+
         this.RuleForSensitive(x => x.PrimaryEmail)
             .NotEmpty()
             .EmailAddress()

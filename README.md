@@ -6,5 +6,28 @@ This package extends [SensitiveString](https://www.nuget.org/packages/SensitiveS
 ## Example
 
 ```c#
+using FluentValidation;
+using TextPrivacy.SensitiveString.FluentValidation;
 
+...
+
+public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
+{
+    public CreateUserRequestValidator()
+    {
+        this.RuleForSensitive(x => x.FirstName)
+            .NotEmpty();
+
+        this.RuleForSensitive(x => x.PrimaryEmail)
+            .NotEmpty()
+            .EmailAddress();
+
+        this.RuleForEachSensitive(x => x.SecondaryEmails)
+            .NotEmpty()
+            .EmailAddress();
+
+				this.RuleForEachSensitive(x => x.AddressLines)
+            .NotEmpty()
+    }
+}
 ```

@@ -18,11 +18,11 @@ public static class FluentValidatorExtensions
     /// <typeparam name="TRequest">
     ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
     /// </typeparam>
-    public static IRuleBuilderInitial<TRequest, string> RuleForSensitiveString<TRequest>(
+    public static IRuleBuilderInitial<TRequest, string?> RuleForSensitiveString<TRequest>(
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, SensitiveString?>> expression)
     {
-        var result = new RuleBuilderInitialAdapter<TRequest>(validator.RuleFor(expression)!);
+        var result = new RuleBuilderInitialAdapter<TRequest>(validator.RuleFor(expression));
         return result;
     }
 
@@ -38,11 +38,11 @@ public static class FluentValidatorExtensions
     /// <typeparam name="TRequest">
     ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
     /// </typeparam>
-    public static IRuleBuilderInitialCollection<TRequest, string> RuleForEachSensitiveString<TRequest>(
+    public static IRuleBuilderInitialCollection<TRequest, string?> RuleForEachSensitiveString<TRequest>(
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, IEnumerable<SensitiveString?>?>> expression)
     {
-        var result = new RuleBuilderInitialCollectionAdapter<TRequest>(validator.RuleForEach(expression)!);
+        var result = new RuleBuilderInitialCollectionAdapter<TRequest>(validator.RuleForEach(expression));
         return result;
     }
 }

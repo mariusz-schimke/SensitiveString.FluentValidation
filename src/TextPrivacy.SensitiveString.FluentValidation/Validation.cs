@@ -6,21 +6,11 @@ namespace TextPrivacy.SensitiveString.FluentValidation;
 
 public static class Validation
 {
-    /// <summary>
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </summary>
-    /// <param name="validator">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </param>
-    /// <param name="expression">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </param>
-    /// <typeparam name="TRequest">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
-    /// </typeparam>
-    public static IRuleBuilderInitial<TRequest, string?> RuleForSensitive<TRequest>(
+    /// <inheritdoc cref="AbstractValidator{T}.RuleFor{TProperty}" />
+    public static IRuleBuilderInitial<TRequest, string> RuleForSensitive<TRequest, TProperty>(
         this AbstractValidator<TRequest> validator,
-        Expression<Func<TRequest, SensitiveString?>> expression)
+        Expression<Func<TRequest, TProperty>> expression)
+        where TProperty : SensitiveString?
     {
         // type cast the expression to string so x => x.SensitiveStringProperty becomes x => (string) x.SensitiveStringProperty
         var convertedExpression = Expression.Lambda<Func<TRequest, string>>(
@@ -31,21 +21,11 @@ public static class Validation
         return validator.RuleFor(convertedExpression);
     }
 
-    /// <summary>
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </summary>
-    /// <param name="validator">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </param>
-    /// <param name="expression">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </param>
-    /// <typeparam name="TRequest">
-    ///     <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
-    /// </typeparam>
-    public static IRuleBuilderInitialCollection<TRequest, string?> RuleForEachSensitive<TRequest>(
+    /// <inheritdoc cref="AbstractValidator{T}.RuleForEach{TElement}" />
+    public static IRuleBuilderInitialCollection<TRequest, string> RuleForEachSensitive<TRequest, TProperty>(
         this AbstractValidator<TRequest> validator,
-        Expression<Func<TRequest, IEnumerable<SensitiveString?>?>> expression)
+        Expression<Func<TRequest, IEnumerable<TProperty>?>> expression)
+        where TProperty : SensitiveString?
     {
         // x.SensitiveStringCollectionProperty
         var collectionExpression = expression.Body;
@@ -64,7 +44,7 @@ public static class Validation
             itemTypeConversionLambda);
 
         // x => x.SensitiveStringCollectionProperty.Select(item => Convert(item, String))
-        var selectCallWithItemTypeConversionLambda = Expression.Lambda<Func<TRequest, IEnumerable<string?>?>>(
+        var selectCallWithItemTypeConversionLambda = Expression.Lambda<Func<TRequest, IEnumerable<string>?>>(
             selectCallWithItemTypeConversion,
             expression.Parameters);
 

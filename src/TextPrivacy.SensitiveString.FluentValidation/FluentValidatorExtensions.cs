@@ -8,15 +8,10 @@ public static class FluentValidatorExtensions
 {
     public static IRuleBuilderInitial<TRequest, string> RuleForSensitiveString<TRequest>(
         this AbstractValidator<TRequest> validator,
-        Expression<Func<TRequest, SensitiveString?>> expression)
+        Expression<Func<TRequest, SensitiveString>> expression)
     {
-        // converts the expression to cast SensitiveString to string
-        var convertedExpression = Expression.Lambda<Func<TRequest, string>>(
-            Expression.Convert(expression.Body, typeof(string)),
-            expression.Parameters
-        );
-
-        return validator.RuleFor(convertedExpression);
+        var result = new RuleBuilderInitialAdapter<TRequest>(validator.RuleFor(expression));
+        return result;
     }
 
     public static IRuleBuilderInitialCollection<TRequest, string> RuleForEachSensitiveString<TRequest>(

@@ -23,7 +23,7 @@ public static class FluentValidatorExtensions
         this AbstractValidator<TRequest> validator,
         Expression<Func<TRequest, IEnumerable<SensitiveString>>> expression)
     {
-        var result = new SensitiveStringRuleAdapter<TRequest>(validator.RuleForEach(expression));
+        var result = new RuleBuilderInitialCollectionAdapter<TRequest>(validator.RuleForEach(expression));
         return result;
     }
 }

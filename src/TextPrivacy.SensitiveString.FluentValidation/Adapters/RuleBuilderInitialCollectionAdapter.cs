@@ -3,11 +3,11 @@ using FluentValidation.Validators;
 
 namespace TextPrivacy.SensitiveString.FluentValidation.Adapters;
 
-internal class SensitiveStringRuleAdapter<TRequest> : IRuleBuilderInitialCollection<TRequest, string>
+internal class RuleBuilderInitialCollectionAdapter<TRequest> : IRuleBuilderInitialCollection<TRequest, string>
 {
     private readonly IRuleBuilderInitialCollection<TRequest, SensitiveString> _originalRule;
 
-    public SensitiveStringRuleAdapter(IRuleBuilderInitialCollection<TRequest, SensitiveString> originalRule)
+    public RuleBuilderInitialCollectionAdapter(IRuleBuilderInitialCollection<TRequest, SensitiveString> originalRule)
     {
         _originalRule = originalRule;
     }

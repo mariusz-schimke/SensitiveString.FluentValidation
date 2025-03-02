@@ -1,0 +1,21 @@
+@HostAddress = https://localhost:7082
+
+POST {{HostAddress}}/users/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "FirstName": "John",
+  "LastName": "Doe",
+  "PrimaryEmail": "john.doe@example.com",
+  "SecondaryEmails": [
+    "jdoe@example.com",
+    "doej@example.com"
+  ],
+  "AddressLines": [
+    "AddressLine1",
+    "AddressLine2"
+  ]
+}
+
+###

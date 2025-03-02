@@ -13,6 +13,7 @@ public static class Validation
         where TProperty : SensitiveString?
     {
         // type cast the expression to string so x => x.SensitiveStringProperty becomes x => (string) x.SensitiveStringProperty
+        // (for this to work, the actual type, EVEN A DESCENDANT, has to have an implicit or explicit conversion to string implemented)
         var convertedExpression = Expression.Lambda<Func<TRequest, string>>(
             Expression.Convert(expression.Body, typeof(string)),
             expression.Parameters
